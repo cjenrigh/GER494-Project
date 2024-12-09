@@ -1,0 +1,1657 @@
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.vitality = 100
+        self.resources = 1000
+        self.enhancements = set()
+        self.self_awareness = 0
+        self.connections = {"NuraTech": 0, "Resistance": 0, "Outskirts": 0}
+        self.allegiance = "Unaffiliated"
+        self.insights = set()
+        self.self_image = "Uncertain"
+        self.true_nature = "Unknown"
+
+    def add_enhancement(self, enhancement):
+        self.enhancements.add(enhancement)
+        if "Neural" in enhancement:
+            self.self_awareness += 1
+
+    def gain_insight(self, insight):
+        self.insights.add(insight)
+
+    def __str__(self):
+        return f"Name: {self.name}, Vitality: {self.vitality}, Resources: {self.resources}, Enhancements: {self.enhancements}, Self-Awareness: {self.self_awareness}, Connections: {self.connections}, Allegiance: {self.allegiance}, Self-Image: {self.self_image}, True Nature: {self.true_nature}"
+
+def start_game():
+    print("Welcome to 'Identity Crisis'")
+    name = input("What is your name? ")
+    player = Player(name)
+    print(f"Hello, {player.name}. You find yourself in a world where the boundaries between human, machine, and something in-between are blurred.")
+    main_loop(player)
+
+def main_loop(player):
+    day_count = 0
+    while player.vitality > 0:
+        day_count += 1
+        print(f"\n--- Day {day_count} ---")
+        print("1. Explore the City")
+        print("2. Visit NuraTech")
+        print("3. Contact the Resistance")
+        print("4. Venture to the Outskirts")
+        print("5. Personal Reflection")
+
+        choice = input("What would you like to do? ")
+
+        if choice == "1":
+            explore_city(player)
+        elif choice == "2":
+            visit_nuratech(player)
+        elif choice == "3":
+            contact_resistance(player)
+        elif choice == "4":
+            venture_outskirts(player)
+        elif choice == "5":
+            personal_reflection(player)
+        else:
+            print("You decide to rest for the day.")
+            return
+
+        if day_count % 5 == 0:
+            print("\nYou have a moment of calm in your journey.")
+            print("1. Reflect on your identity")
+            print("2. Continue on your path")
+
+            choice = input("How do you spend this moment? ")
+
+            if choice == "1":
+                contemplate_identity(player)
+            if choice == "2":
+                print("You move forward, leaving little time for introspection or connection.")
+                return
+            else:
+                print("You decide to rest for the day.")
+                return
+
+        update_true_nature(player)
+
+        if endgame_conditions_met(player):
+            final_confrontation(player)
+            break
+
+    if player.vitality <= 0:
+        print("Your journey comes to an end, but in this world, endings are just new beginnings...")
+        restart_game()
+
+def explore_city(player):
+    print("\nYou wander the bustling streets of the city.")
+    print("1. Visit the Black Market")
+    print("2. Investigate NuraTech Propaganda")
+    print("3. Look for Resistance Activity")
+    print("4. Talk to the Struggling Synthetics")
+    print("5. Explore the Tech District")
+
+    choice = input("Where do you go? ")
+
+    if choice == "1":
+        black_market(player)
+    elif choice == "2":
+        nuratech_propaganda(player)
+    elif choice == "3":
+        resistance_activity(player)
+    elif choice == "4":
+        struggling_synthetics(player)
+    elif choice == "5":
+        tech_district(player)
+    else:
+        print("You wander aimlessly, taking in the sights and sounds of the city.")
+        return
+def black_market(player):
+    print("\nYou enter the shadowy world of the black market.")
+    print("1. Purchase Experimental Enhancements")
+    print("2. Buy Classified Information")
+    print("3. Take on a Risky Job")
+    print("4. Trade in Synthetic Parts")
+    print("5. Look for the Scarce NuraTech Drug")
+
+    choice = input("What do you want to do? ")
+
+    if choice == "1":
+        experimental_enhancements(player)
+    elif choice == "2":
+        classified_information(player)
+    elif choice == "3":
+        risky_job(player)
+    elif choice == "4":
+        synthetic_parts_trade(player)
+    elif choice == "5":
+        nuratech_drug_search(player)
+    else:
+        print("You leave the black market, overwhelmed by its offerings.")
+        return
+
+def experimental_enhancements(player):
+    print("\nA shady dealer approaches you.")
+    print("Dealer: 'Looking for an edge? I've got some cutting-edge tech that'll blow your mind.'")
+    
+    print("1. Neural Pathway Amplifier")
+    print("2. Synthetic Muscle Fibers")
+    print("3. Quantum Processing Unit")
+    print("4. Chameleon Skin Graft")
+    print("5. Empathy Enhancer")
+    
+    choice = input("Which enhancement interests you? ")
+    
+    if choice == "1":
+        print("Dealer: 'The Neural Pathway Amplifier will make you think faster than any human or machine.'")
+        if player.resources >= 500:
+            player.add_enhancement("Neural Pathway Amplifier")
+            player.resources -= 500
+            player.self_awareness += 2
+            print("You feel your thoughts accelerating as the device integrates with your brain.")
+            return
+        else:
+            print("You don't have enough resources for this enhancement.")
+            return
+    elif choice == "2":
+        print("Dealer: 'Synthetic Muscle Fibers will make you stronger than ten men combined.'")
+        if player.resources >= 400:
+            player.add_enhancement("Synthetic Muscle Fibers")
+            player.resources -= 400
+            player.vitality += 20
+            print("You feel a surge of strength as the fibers weave into your muscles.")
+            return
+        else:
+            print("You don't have enough resources for this enhancement.")
+            return
+    elif choice == "3":
+        print("Dealer: 'The Quantum Processing Unit is top-of-the-line. You'll process information like a supercomputer.'")
+        if player.resources >= 600:
+            player.add_enhancement("Quantum Processing Unit")
+            player.resources -= 600
+            player.self_awareness += 3
+            print("Your perception of reality shifts as quantum calculations become second nature.")
+            return
+        else:
+            print("You don't have enough resources for this enhancement.")
+            return
+    elif choice == "4":
+        print("Dealer: 'The Chameleon Skin Graft allows you to blend in with any environment.'")
+        if player.resources >= 550:
+            player.add_enhancement("Chameleon Skin Graft")
+            player.resources -= 550
+            print("Your skin tingles as it gains the ability to change color and texture.")
+            return
+        else:
+            print("You don't have enough resources for this enhancement.")
+            return
+    elif choice == "5":
+        print("Dealer: 'The Empathy Enhancer lets you read emotions like an open book.'")
+        if player.resources >= 450:
+            player.add_enhancement("Empathy Enhancer")
+            player.resources -= 450
+            player.self_awareness += 2
+            print("You suddenly become acutely aware of the emotions of those around you.")
+            return
+        else:
+            print("You don't have enough resources for this enhancement.")
+            return
+    else:
+        print("You decide not to purchase any enhancements today.")
+        return
+def classified_information(player):
+    print("\nAn information broker sidles up to you.")
+    print("Broker: 'Psst, looking for some insider info? I've got secrets that could change everything you think you know.'")
+    
+    print("1. NuraTech's Secret Projects")
+    print("2. Resistance Movement Plans")
+    print("3. Truth about the Outskirts")
+    print("4. Synthetic Origins")
+    print("5. Global Power Dynamics")
+    
+    choice = input("What information do you want to buy? ")
+    
+    if choice == "1":
+        if player.resources >= 300:
+            player.gain_insight("NuraTech's True Agenda")
+            player.resources -= 300
+            print("You learn about NuraTech's plans to create a hive-mind AI using harvested human consciousness.")
+            player.self_awareness += 2
+            player.connections["NuraTech"] -= 5
+            return
+        else:
+            print("You don't have enough resources for this information.")
+            return
+    elif choice == "2":
+        if player.resources >= 250:
+            player.gain_insight("Resistance's Internal Struggles")
+            player.resources -= 250
+            print("You discover that the Resistance is divided on whether to destroy or repurpose NuraTech's AI.")
+            player.connections["Resistance"] += 10
+            player.self_awareness += 1
+            return
+        else:
+            print("You don't have enough resources for this information.")
+            return
+    elif choice == "3":
+        if player.resources >= 350:
+            player.gain_insight("Outskirts' Hidden Knowledge")
+            player.resources -= 350
+            print("You learn that the Outskirts have developed a symbiotic relationship between humans and nature-based AI.")
+            player.connections["Outskirts"] += 15
+            player.self_awareness += 2
+            return
+        else:
+            print("You don't have enough resources for this information.")
+            return
+    elif choice == "4":
+        if player.resources >= 400:
+            player.gain_insight("True Nature of Synthetics")
+            player.resources -= 400
+            print("You uncover the shocking truth about synthetic origins and their connection to human consciousness.")
+            player.self_awareness += 3
+            if player.true_nature == "Advanced Synthetic" or player.true_nature == "Reclaimed Synthetic":
+                print("This revelation shakes you to your core, making you question your entire existence.")
+            return
+        else:
+            print("You don't have enough resources for this information.")
+            return
+    elif choice == "5":
+        if player.resources >= 500:
+            player.gain_insight("Global Power Structures")
+            player.resources -= 500
+            print("You gain access to information about the hidden powers controlling NuraTech, the Resistance, and even the Outskirts.")
+            player.self_awareness += 2
+            player.connections["NuraTech"] -= 5
+            player.connections["Resistance"] -= 5
+            player.connections["Outskirts"] -= 5
+            return
+        else:
+            print("You don't have enough resources for this information.")
+            return
+    else:
+        print("You decide not to purchase any information today.")
+        print("The broker disappears into the shadows, leaving you to ponder the implications of what you've learned.")
+        return
+def risky_job(player):
+    print("\nA mysterious figure approaches you with a job offer.")
+    print("Figure: 'I've got some high-risk, high-reward jobs. Interested in making some serious resources?'")
+    
+    print("1. Infiltrate NuraTech Facility")
+    print("2. Sabotage Resistance Operation")
+    print("3. Retrieve Artifact from the Outskirts")
+    print("4. Smuggle Synthetic Parts")
+    print("5. Hack into City Mainframe")
+    
+    choice = input("Which job do you want to take? ")
+    
+    if choice == "1":
+        print("Figure: 'Sneak into NuraTech's R&D department and steal their latest prototype.'")
+        if "Stealth Module" in player.enhancements:
+            player.resources += 1000
+            player.connections["NuraTech"] -= 20
+            player.gain_insight("NuraTech's Advanced Prototypes")
+            print("You successfully infiltrate NuraTech and steal their prototype, gaining valuable insights and resources.")
+            return
+        else:
+            player.vitality -= 30
+            player.connections["NuraTech"] -= 10
+            print("Your infiltration attempt fails, and you barely escape with your life.")
+            return
+    elif choice == "2":
+        print("Figure: 'The Resistance is planning a major operation. Sabotage it, and you'll be well compensated.'")
+        player.resources += 800
+        player.connections["Resistance"] -= 25
+        player.gain_insight("Resistance's Weaknesses")
+        print("You successfully sabotage the Resistance operation, earning a substantial reward but compromising your standing with them.")
+        return
+    elif choice == "3":
+        print("Figure: 'There's a powerful artifact hidden in the Outskirts. Retrieve it, and you'll be set for life.'")
+        if "Wilderness Survival" in player.enhancements:
+            player.resources += 1200
+            player.connections["Outskirts"] -= 15
+            player.gain_insight("Ancient Technological Wisdom")
+            print("You successfully retrieve the artifact, gaining immense wealth and knowledge, but disturbing the Outskirts' peace.")
+            return
+        else:
+            player.vitality -= 25
+            print("The dangers of the Outskirts prove too much, and you return empty-handed and injured.")
+            return
+    elif choice == "4":
+        print("Figure: 'We need someone to move some... sensitive synthetic components across city borders.'")
+        if "Chameleon Skin Graft" in player.enhancements:
+            player.resources += 900
+            player.gain_insight("Synthetic Black Market")
+            print("Your ability to blend in allows you to smuggle the parts successfully, earning a hefty payment.")
+            return
+        else:
+            player.connections["NuraTech"] -= 15
+            player.connections["Resistance"] += 10
+            print("You're caught by authorities, but manage to escape. The experience gives you insights into both sides of the conflict.")
+            return
+    elif choice == "5":
+        print("Figure: 'The city's mainframe holds valuable data. Get in, get the data, get out.'")
+        if "Quantum Processing Unit" in player.enhancements:
+            player.resources += 1500
+            player.gain_insight("City-Wide Data Patterns")
+            player.self_awareness += 2
+            print("Your enhanced processing capabilities allow you to hack the mainframe and escape undetected, with a wealth of valuable data.")
+            return
+        else:
+            player.vitality -= 20
+            player.connections["NuraTech"] -= 5
+            print("The mainframe's security proves too advanced. You trigger alarms and barely escape, learning the hard way about the city's cyber defenses.")
+            return
+    else:
+        print("You decide the risks outweigh the potential rewards and walk away from the mysterious figure.")
+        print("The figure disappears into the shadows, leaving you to contemplate the consequences of your actions.")
+        return
+def synthetic_parts_trade(player):
+    print("\nYou enter a dimly lit shop filled with synthetic body parts.")
+    print("Shopkeeper: 'Welcome! Looking to upgrade? Or perhaps... downgrade? I've got all sorts of parts here.'")
+    
+    print("1. Sell Excess Parts")
+    print("2. Buy Reclaimed Synthetic Parts")
+    print("3. Inquire about Rare Components")
+    print("4. Examine Custom-Made Parts")
+    print("5. Trade Parts with Other Customers")
+    
+    choice = input("What would you like to do? ")
+    
+    if choice == "1":
+        if len(player.enhancements) > 0:
+            print("Your available parts:")
+            for i, enhancement in enumerate(player.enhancements, 1):
+                print(f"{i}. {enhancement}")
+            sell_choice = input("Which part would you like to sell? (Enter the number or 'none') ")
+            if sell_choice.lower() != 'none' and sell_choice.isdigit():
+                index = int(sell_choice) - 1
+                if 0 <= index < len(player.enhancements):
+                    part = list(player.enhancements)[index]
+                    player.enhancements.remove(part)
+                    player.resources += 200
+                    print(f"You sell your {part} for 200 resources.")
+                    player.self_awareness += 1
+                    return
+                else:
+                    print("Invalid choice. No transaction made.")
+                    return
+            else:
+                print("You decide not to sell any parts.")
+                return
+        else:
+            print("You don't have any parts to sell.")
+            return
+    elif choice == "2":
+        print("Available reclaimed parts:")
+        print("1. Refurbished Optical Unit (300 resources)")
+        print("2. Second-hand Neural Interface (400 resources)")
+        print("3. Recycled Synthetic Limb (350 resources)")
+        buy_choice = input("Which part would you like to buy? (Enter the number or 'none') ")
+        if buy_choice == "1" and player.resources >= 300:
+            player.add_enhancement("Refurbished Optical Unit")
+            player.resources -= 300
+            print("You purchase the Refurbished Optical Unit, gaining enhanced vision but with occasional glitches.")
+            return
+        elif buy_choice == "2" and player.resources >= 400:
+            player.add_enhancement("Second-hand Neural Interface")
+            player.resources -= 400
+            print("You buy the Second-hand Neural Interface, improving your reaction time but with some sensory feedback issues.")
+            return
+        elif buy_choice == "3" and player.resources >= 350:
+            player.add_enhancement("Recycled Synthetic Limb")
+            player.resources -= 350
+            print("You acquire the Recycled Synthetic Limb, increasing your strength but with limited fine motor control.")
+            return
+        else:
+            print("You decide not to purchase any reclaimed parts.")
+            return
+    elif choice == "3":
+        print("Shopkeeper: 'Rare components? I might have something special in the back...'")
+        print("The shopkeeper returns with a mysterious device.")
+        print("Shopkeeper: 'This is a prototype Quantum Entanglement Module. It's... not entirely stable.'")
+        if player.resources >= 1000:
+            purchase = input("Would you like to buy it for 1000 resources? (yes/no) ")
+            if purchase.lower() == "yes":
+                player.add_enhancement("Quantum Entanglement Module")
+                player.resources -= 1000
+                player.self_awareness += 3
+                print("You acquire the Quantum Entanglement Module. Your perception of reality begins to shift in unexpected ways.")
+                return
+            else:
+                print("You decide the risk isn't worth it.")
+                return
+        else:
+            print("You don't have enough resources for such a rare component.")
+            return
+    elif choice == "4":
+        print("Shopkeeper: 'Interested in something unique? I can craft a part tailored just for you.'")
+        print("1. Emotion Regulator")
+        print("2. Memory Enhancer")
+        print("3. Synthetic Skin with Chameleon Properties")
+        custom_choice = input("Which custom part interests you? ")
+        if custom_choice in ["1", "2", "3"] and player.resources >= 600:
+            player.resources -= 600
+            if custom_choice == "1":
+                player.add_enhancement("Custom Emotion Regulator")
+                print("You receive a Custom Emotion Regulator. It allows you to control your emotional responses, but at what cost to your humanity?")
+                return
+            elif custom_choice == "2":
+                player.add_enhancement("Custom Memory Enhancer")
+                print("You're fitted with a Custom Memory Enhancer. Your recall becomes perfect, but you find it harder to forget painful memories.")
+                return
+            else:
+                player.add_enhancement("Custom Chameleon Skin")
+                print("You're grafted with Custom Chameleon Skin. You can blend in anywhere, but you begin to question your true appearance.")
+                return
+            player.self_awareness += 2
+        else:
+            print("You decide against custom parts for now.")
+            return
+    elif choice == "5":
+        if len(player.enhancements) > 0:
+            print("You meet another customer interested in trading parts.")
+            print("They offer a 'Synaptic Accelerator' in exchange for one of your enhancements.")
+            trade = input("Would you like to trade? (yes/no) ")
+            if trade.lower() == "yes":
+                traded_part = player.enhancements.pop()
+                player.add_enhancement("Synaptic Accelerator")
+                print(f"You trade your {traded_part} for a Synaptic Accelerator. Your thought processes speed up, but you feel a sense of loss for the traded part.")
+                player.self_awareness += 1
+                return
+            else:
+                print("You decide to keep your current enhancements.")
+                return
+        else:
+            print("You don't have any parts to trade.")
+            return
+    else:
+        print("You leave the shop without making any transactions.")
+        print("As you exit the shop, you can't help but reflect on how each part, bought or sold, changes who you are.")
+        return
+def nuratech_drug_search(player):
+    print("\nYou discreetly ask around about the scarce NuraTech drug.")
+    print("Dealer: 'That stuff's hard to come by these days. NuraTech's got a tight grip on the supply.'")
+    
+    print("1. Try to Buy the Drug")
+    print("2. Inquire About Its Effects")
+    print("3. Ask About Alternatives")
+    print("4. Investigate the Supply Chain")
+    print("5. Offer to Help Distribute")
+    
+    choice = input("What do you want to do? ")
+    
+    if choice == "1":
+        if player.resources >= 500:
+            player.resources -= 500
+            player.vitality += 10
+            player.add_enhancement("NuraTech Drug")
+            print("You manage to acquire a small dose of the drug. It stabilizes your systems, but for how long?")
+            player.gain_insight("NuraTech Drug Experience")
+            return
+        else:
+            print("You don't have enough resources to buy the drug.")
+            return
+    elif choice == "2":
+        print("Dealer: 'It's like a lifeline for older synths. Keeps them functioning, but it's a double-edged sword.'")
+        player.gain_insight("NuraTech Drug Dependency")
+        print("You learn about the drug's addictive nature and its critical role in synthetic survival.")
+        return
+    elif choice == "3":
+        print("Dealer: 'Alternatives? Some say the Outskirts have found a way, but that's just a rumor.'")
+        player.gain_insight("Potential Drug Alternatives")
+        player.connections["Outskirts"] += 5
+        return
+    elif choice == "4":
+        if "Hacking Interface" in player.enhancements:
+            print("You use your hacking skills to trace the drug's distribution network.")
+            player.gain_insight("NuraTech Drug Supply Chain")
+            player.connections["NuraTech"] -= 10
+            return
+        else:
+            print("Without the right tech, you can't dig deep into the supply chain.")
+            return
+    elif choice == "5":
+        if player.connections["NuraTech"] > 20:
+            print("Your NuraTech connections allow you to become a low-level distributor.")
+            player.resources += 300
+            player.connections["Resistance"] -= 15
+            player.gain_insight("NuraTech Drug Trade")
+            return
+        else:
+            print("The dealer doesn't trust you enough to involve you in distribution.")
+            return
+    else:
+        print("You decide to leave the topic alone for now, wary of getting too involved.")
+        print("As you walk away, you ponder the implications of the drug's scarcity and its impact on synthetic life.")
+        return
+def nuratech_propaganda(player):
+    print("\nYou come across a large NuraTech billboard showcasing their latest innovations.")
+    print("The slogan reads: 'NuraTech: Bridging Humanity and Technology for a Brighter Future'")
+    
+    print("1. Analyze the Message")
+    print("2. Look for Hidden Meanings")
+    print("3. Observe Public Reaction")
+    print("4. Interact with the Holographic Display")
+    print("5. Investigate the Billboard's Construction")
+    
+    choice = input("What do you want to do? ")
+    
+    if choice == "1":
+        print("You notice how the message appeals to both human desires and technological progress.")
+        player.self_awareness += 1
+        player.gain_insight("NuraTech's Public Image")
+        return
+    elif choice == "2":
+        if "Pattern Recognition" in player.enhancements:
+            print("You detect subtle visual cues that seem to trigger subconscious responses in viewers.")
+            player.gain_insight("NuraTech's Subliminal Messaging")
+            player.connections["NuraTech"] -= 5
+            return
+        else:
+            print("You sense there might be more to the message, but can't quite figure it out.")
+            return
+    elif choice == "3":
+        print("You see a mix of awe, skepticism, and indifference among the passersby.")
+        player.gain_insight("Public Opinion on NuraTech")
+        player.self_awareness += 1
+        return
+    elif choice == "4":
+        print("You interact with the holographic display, which showcases NuraTech's latest products.")
+        if "Quantum Processing Unit" in player.enhancements:
+            print("Your enhanced processing allows you to spot inconsistencies in the product claims.")
+            player.gain_insight("NuraTech's Exaggerated Promises")
+            return
+        else:
+            print("The sleek presentation leaves you impressed with NuraTech's innovations.")
+            player.connections["NuraTech"] += 5
+            return
+    elif choice == "5":
+        if "Enhanced Vision" in player.enhancements:
+            print("Your enhanced vision reveals hidden transmitters embedded in the billboard.")
+            player.gain_insight("NuraTech's Surveillance Network")
+            player.connections["Resistance"] += 5
+            return
+        else:
+            print("The billboard seems to be a standard high-tech display.")
+            return
+    else:
+        print("You walk past the billboard, trying not to let it influence you.")
+        print("As you move on, you ponder the impact of such pervasive advertising on society's perception of technology.")
+        return
+def resistance_activity(player):
+    print("\nYou notice some subtle signs that might indicate Resistance activity in the area.")
+    print("A figure in the shadows seems to be watching you.")
+    
+    print("1. Approach the Figure")
+    print("2. Look for Resistance Symbols")
+    print("3. Pretend You Haven't Noticed")
+    print("4. Use Enhanced Senses to Scan the Area")
+    print("5. Leave an Encrypted Message")
+    
+    choice = input("What do you do? ")
+    
+    if choice == "1":
+        print("Figure: 'You seem aware. Are you one of us, or one of them?'")
+        response = input("How do you respond? (1. 'I'm with you' / 2. 'I'm my own person' / 3. Stay silent) ")
+        if response == "1":
+            player.connections["Resistance"] += 10
+            print("The figure nods approvingly and shares some information about NuraTech's recent activities.")
+            player.gain_insight("NuraTech's Recent Operations")
+            return
+        elif response == "2":
+            player.self_awareness += 1
+            print("The figure seems intrigued by your response and offers you a chance to prove yourself.")
+            player.gain_insight("Resistance Recruitment Methods")
+            return
+        else:
+            print("The figure disappears into the shadows, leaving you wondering about the encounter.")
+            return
+    elif choice == "2":
+        if "Enhanced Vision" in player.enhancements:
+            print("You spot a hidden Resistance symbol, revealing the location of a secret meeting.")
+            player.gain_insight("Resistance Communication Methods")
+            player.connections["Resistance"] += 5
+            return
+        else:
+            print("You search for symbols but find nothing conclusive.")
+            return
+    elif choice == "3":
+        print("You continue on your way, but can't shake the feeling of being watched.")
+        player.self_awareness += 1
+        return
+    elif choice == "4":
+        if "Quantum Sensing" in player.enhancements:
+            print("Your enhanced senses detect a hidden underground facility nearby.")
+            player.gain_insight("Resistance Hidden Base")
+            player.connections["Resistance"] += 15
+            return
+        else:
+            print("You try to sense more but lack the necessary enhancements.")
+            return
+    elif choice == "5":
+        if "Cryptography Module" in player.enhancements:
+            print("You leave an encrypted message for the Resistance. Soon after, you receive a coded response.")
+            player.gain_insight("Resistance Encryption Techniques")
+            player.connections["Resistance"] += 10
+            return
+        else:
+            print("You attempt to leave a message, but worry it might be intercepted by NuraTech.")
+            return
+    else:
+        print("Your indecision causes the moment to pass, and the figure disappears.")
+        print("As you reflect on this encounter, you ponder the complexities of loyalty and identity in this fractured world.")
+        return
+def struggling_synthetics(player):
+    print("\nYou encounter a group of older-model synthetics, clearly struggling without access to NuraTech's drug.")
+    print("1. Offer Assistance")
+    print("2. Inquire About Their Condition")
+    print("3. Observe from a Distance")
+    print("4. Share Information About Alternatives")
+    print("5. Recruit Them for the Resistance")
+    
+    choice = input("How do you approach the situation? ")
+    
+    if choice == "1":
+        if "NuraTech Drug" in player.enhancements:
+            print("You share some of your supply, providing temporary relief to the synthetics.")
+            player.connections["Resistance"] += 15
+            player.gain_insight("Synthetic Dependency")
+            return
+        else:
+            print("You want to help but lack the means to do so, leaving you feeling helpless.")
+            return
+    elif choice == "2":
+        print("Synthetic: 'We're... malfunctioning. NuraTech's 'maintenance' is becoming scarce.'")
+        player.gain_insight("NuraTech's Control Methods")
+        return
+    elif choice == "3":
+        print("You watch discreetly, noting the various signs of deterioration in the older models.")
+        player.self_awareness += 1
+        return
+    elif choice == "4":
+        if "Potential Drug Alternatives" in player.insights:
+            print("You share information about potential alternatives from the Outskirts.")
+            player.connections["Outskirts"] += 10
+            player.connections["Resistance"] += 5
+            return
+        else:
+            print("You wish you knew of alternatives to help them.")
+            return
+    elif choice == "5":
+        if player.connections["Resistance"] > 20:
+            print("You convince some of the synthetics to join the Resistance for a chance at freedom.")
+            player.connections["Resistance"] += 20
+            player.gain_insight("Synthetic Motivation")
+            return
+        else:
+            print("The synthetics are too wary to trust you with such a proposition.")
+            return
+    else:
+        print("You walk away, the image of the struggling synthetics lingering in your mind.")
+        return
+
+def tech_district(player):
+    print("\nYou enter the sleek, high-tech district dominated by NuraTech's influence.")
+    print("1. Visit a Public Tech Showcase")
+    print("2. Eavesdrop on Tech Workers")
+    print("3. Analyze Security Measures")
+    print("4. Infiltrate a Research Facility")
+    print("5. Attend a Tech Conference")
+    
+    choice = input("What's your focus in the Tech District? ")
+    
+    if choice == "1":
+        print("You attend a dazzling display of NuraTech's latest innovations.")
+        player.gain_insight("NuraTech's Public Face")
+        return
+    elif choice == "2":
+        if "Audio Enhancement" in player.enhancements:
+            print("You overhear discussions about a secret project called 'Singularity'.")
+            player.gain_insight("NuraTech's Ultimate Goal")
+            return
+        else:
+            print("You catch snippets of conversation, but nothing substantial.")
+            return
+    elif choice == "3":
+        if "Security Systems Knowledge" in player.enhancements:
+            print("You identify potential weaknesses in NuraTech's security protocols.")
+            player.gain_insight("NuraTech's Vulnerabilities")
+            return
+        else:
+            print("The security measures seem impenetrable to your current understanding.")
+            return
+    elif choice == "4":
+        if "Chameleon Skin Graft" in player.enhancements:
+            print("You blend in and access restricted areas, uncovering valuable research data.")
+            player.gain_insight("NuraTech's Advanced Research")
+            player.connections["NuraTech"] -= 5
+            return
+        else:
+            print("Without a way to disguise yourself, infiltration seems too risky.")
+            return
+    elif choice == "5":
+        print("You attend a tech conference, learning about the latest advancements and industry trends.")
+        player.gain_insight("Current Tech Landscape")
+        player.self_awareness += 1
+        return
+    else:
+        print("You wander the district, overwhelmed by the technological marvels around you.")
+        return
+def visit_nuratech(player):
+    print("\nYou approach the imposing NuraTech headquarters.")
+    print("The sleek, futuristic building looms before you, its logo pulsing with an eerie blue light.")
+    
+    print("1. Apply for a Job")
+    print("2. Attend a Public Tour")
+    print("3. Attempt to Infiltrate")
+    print("4. Protest Outside")
+    print("5. Seek a Meeting with an Executive")
+    
+    choice = input("What's your plan at NuraTech? ")
+    
+    if choice == "1":
+        apply_nuratech_job(player)
+    elif choice == "2":
+        attend_nuratech_tour(player)
+    elif choice == "3":
+        infiltrate_nuratech(player)
+    elif choice == "4":
+        protest_nuratech(player)
+    elif choice == "5":
+        meet_nuratech_executive(player)
+    else:
+        print("You hesitate, then decide to walk away from NuraTech for now.")
+        return
+
+def apply_nuratech_job(player):
+    print("\nYou enter the HR department to submit your application.")
+    if player.connections["NuraTech"] > 20:
+        print("Your connections help you secure an interview on the spot.")
+        player.gain_insight("NuraTech's Internal Structure")
+        player.connections["NuraTech"] += 10
+        player.resources += 200
+        return
+    else:
+        print("You submit your application and are told they'll be in touch.")
+        return
+    
+    print("\n1. Emphasize your technical skills")
+    print("2. Highlight your human perspective")
+    print("3. Showcase your hybrid nature")
+    
+    interview_choice = input("How do you present yourself in the interview? ")
+    
+    if interview_choice == "1":
+        if "Quantum Processing Unit" in player.enhancements:
+            print("Your technical prowess impresses the interviewer. You're offered a position in R&D.")
+            player.connections["NuraTech"] += 20
+            player.resources += 500
+            return
+        else:
+            print("The interviewer seems underwhelmed by your technical skills.")
+            return
+    elif interview_choice == "2":
+        if player.self_awareness > 5:
+            print("Your unique human perspective intrigues the interviewer. You're offered a position in the ethics department.")
+            player.connections["NuraTech"] += 15
+            player.gain_insight("NuraTech's Ethical Dilemmas")
+            return
+        else:
+            print("The interviewer politely listens but doesn't seem particularly interested.")
+            return
+    elif interview_choice == "3":
+        if player.true_nature == "Cyborg" or player.true_nature == "Advanced Synthetic":
+            print("Your hybrid nature fascinates the interviewer. You're offered a special position bridging human and synthetic divisions.")
+            player.connections["NuraTech"] += 25
+            player.gain_insight("NuraTech's True Agenda")
+            return
+        else:
+            print("The interviewer seems confused by your attempt to showcase a hybrid nature.")
+            return
+    else:
+        print("You stumble through the interview, leaving no particular impression.")
+        return
+
+def attend_nuratech_tour(player):
+    print("\nYou join a guided tour of NuraTech's public facilities.")
+    player.gain_insight("NuraTech's Public Operations")
+    
+    print("\n1. Ask probing questions")
+    print("2. Observe silently")
+    print("3. Attempt to slip away from the group")
+    
+    tour_choice = input("How do you behave during the tour? ")
+    
+    if tour_choice == "1":
+        print("Your questions catch the guide off guard, revealing some inconsistencies in NuraTech's public image.")
+        player.gain_insight("NuraTech's PR Tactics")
+        player.connections["NuraTech"] -= 5
+        return
+    elif tour_choice == "2":
+        if "Enhanced Vision" in player.enhancements:
+            print("Your keen observation reveals hidden security measures and restricted areas.")
+            player.gain_insight("NuraTech's Security Protocols")
+            return
+        else:
+            print("You notice nothing out of the ordinary during the tour.")
+            return
+    elif tour_choice == "3":
+        if "Chameleon Skin Graft" in player.enhancements:
+            print("You successfully slip away and discover a restricted lab. You overhear discussions about a secret project.")
+            player.gain_insight("NuraTech's Secret Research")
+            player.connections["NuraTech"] -= 10
+            return
+        else:
+            print("Your attempt to slip away is quickly noticed. You're politely but firmly escorted back to the group.")
+            return
+    else:
+        print("You complete the tour without incident, gaining a surface-level understanding of NuraTech's operations.")
+        return
+
+def infiltrate_nuratech(player):
+    print("\nYou attempt to infiltrate NuraTech's secure areas.")
+    
+    if "Stealth Module" in player.enhancements:
+        print("Your stealth capabilities allow you to bypass initial security measures.")
+        
+        print("\n1. Access the main computer terminal")
+        print("2. Infiltrate the executive offices")
+        print("3. Investigate the research labs")
+        
+        infiltrate_choice = input("Where do you focus your infiltration? ")
+        
+        if infiltrate_choice == "1":
+            if "Hacking Interface" in player.enhancements:
+                print("You successfully hack into NuraTech's mainframe, uncovering shocking information about their true plans.")
+                player.gain_insight("NuraTech's Master Plan")
+                player.connections["NuraTech"] -= 20
+                return
+            else:
+                print("Without proper hacking capabilities, you trigger an alarm and must flee.")
+                return
+        elif infiltrate_choice == "2":
+            print("You sneak into an executive's office and discover incriminating documents.")
+            player.gain_insight("NuraTech's Corporate Secrets")
+            player.connections["NuraTech"] -= 15
+            return
+        elif infiltrate_choice == "3":
+            if "Quantum Sensing" in player.enhancements:
+                print("Your advanced senses allow you to understand the complex experiments in the lab. The implications are staggering.")
+                player.gain_insight("NuraTech's Breakthrough Technology")
+                player.self_awareness += 2
+                return
+            else:
+                print("The lab equipment is too advanced for you to make sense of what you're seeing.")
+                return
+        else:
+            print("You wander aimlessly, eventually finding your way out without gaining any valuable information.")
+            return
+    else:
+        print("Without stealth capabilities, your infiltration attempt fails miserably. Security escorts you out.")
+        player.connections["NuraTech"] -= 10
+        return
+
+def protest_nuratech(player):
+    print("\nYou join a group of protesters outside NuraTech headquarters.")
+    
+    print("\n1. Chant slogans peacefully")
+    print("2. Distribute anti-NuraTech pamphlets")
+    print("3. Attempt to rally the crowd for more aggressive action")
+    
+    protest_choice = input("How do you participate in the protest? ")
+    
+    if protest_choice == "1":
+        print("Your peaceful protest draws media attention. NuraTech's public image takes a small hit.")
+        player.connections["Resistance"] += 10
+        player.connections["NuraTech"] -= 5
+        return
+    elif protest_choice == "2":
+        if "Empathy Enhancer" in player.enhancements:
+            print("Your enhanced empathy allows you to connect with people, making your message more impactful.")
+            player.connections["Resistance"] += 15
+            player.gain_insight("Public Sentiment Towards NuraTech")
+            return
+        else:
+            print("You distribute pamphlets, but they seem to have little effect on passersby.")
+            return
+    elif protest_choice == "3":
+        print("Your attempt to incite the crowd backfires. Police intervene and the protest is broken up.")
+        player.connections["Resistance"] -= 5
+        player.vitality -= 10
+        return
+    else:
+        print("You observe the protest from a distance, not fully committing to any action.")
+        return
+
+def meet_nuratech_executive(player):
+    print("\nYou attempt to secure a meeting with a NuraTech executive.")
+    
+    if player.connections["NuraTech"] > 30:
+        print("Your connections grant you a brief meeting with a mid-level executive.")
+        
+        print("\n1. Pitch a revolutionary idea")
+        print("2. Express concerns about NuraTech's practices")
+        print("3. Subtly probe for information")
+        
+        meeting_choice = input("How do you approach the meeting? ")
+        
+        if meeting_choice == "1":
+            if "Quantum Processing Unit" in player.enhancements:
+                print("Your enhanced cognitive abilities allow you to present a truly innovative idea. The executive is impressed.")
+                player.connections["NuraTech"] += 20
+                player.resources += 1000
+                return
+            else:
+                print("Your idea falls flat. The executive politely dismisses you.")
+                return
+        elif meeting_choice == "2":
+            print("The executive becomes defensive. You're politely but firmly escorted out.")
+            player.connections["NuraTech"] -= 10
+            player.gain_insight("NuraTech's Corporate Culture")
+            return
+        elif meeting_choice == "3":
+            if "Empathy Enhancer" in player.enhancements:
+                print("Your subtle probing, enhanced by your empathic abilities, yields valuable insights.")
+                player.gain_insight("NuraTech's Future Plans")
+                return
+            else:
+                print("Your attempts at subtle questioning are too obvious. The executive reveals nothing of value.")
+                return
+        else:
+            print("The meeting ends without any significant outcome.")
+            return
+    else:
+        print("Without proper connections, you're unable to secure a meeting with any executives.")
+        return
+def contact_resistance(player):
+    print("\nYou seek to make contact with the Resistance movement.")
+    print("1. Attend a secret meeting")
+    print("2. Offer information to a suspected Resistance member")
+    print("3. Investigate Resistance graffiti")
+    print("4. Hack into suspected Resistance communications")
+    print("5. Volunteer at a community center known for Resistance ties")
+
+    choice = input("How do you engage with the Resistance? ")
+    
+    if choice == "1":
+        attend_resistance_meeting(player)
+    elif choice == "2":
+        offer_info_to_resistance(player)
+    elif choice == "3":
+        investigate_resistance_graffiti(player)
+    elif choice == "4":
+        hack_resistance_communications(player)
+    elif choice == "5":
+        volunteer_community_center(player)
+    else:
+        print("You hesitate, unsure how to proceed. The Resistance remains elusive for now.")
+        return
+
+def attend_resistance_meeting(player):
+    print("\nYou receive an encrypted message with coordinates for a clandestine gathering.")
+    print("1. Arrive early to scout the area")
+    print("2. Bring a friend for safety")
+    print("3. Prepare a speech to inspire others")
+    print("4. Wear a disguise to avoid detection")
+    print("5. Leave a message for the Resistance if you can't attend")
+
+    choice = input("How do you prepare for the meeting? ")
+    
+    if choice == "1":
+        print("You arrive early and notice a few suspicious figures lurking nearby.")
+        print("1. Confront the figures")
+        print("2. Hide and observe")
+        print("3. Leave the area")
+        sub_choice = input("What do you do? ")
+        if sub_choice == "1":
+            print("You confront the figures, and they turn out to be friendly Resistance members.")
+            player.connections["Resistance"] += 10
+            return
+        elif sub_choice == "2":
+            print("You observe them discussing plans, gaining valuable insights.")
+            player.gain_insight("Resistance Plans")
+            return
+        elif sub_choice == "3":
+            print("You decide it's too risky and leave the area.")
+            return
+        else:
+            print("Invalid choice. You miss the opportunity.")
+            return
+    elif choice == "2":
+        print("You bring a friend, which makes you feel safer.")
+        player.connections["Resistance"] += 5
+        print("Your friend shares their own insights during the meeting.")
+        return
+    elif choice == "3":
+        print("You prepare a speech, but the moment you arrive, you feel nervous.")
+        print("1. Deliver the speech anyway")
+        print("2. Ask someone else to speak")
+        print("3. Keep your thoughts to yourself")
+        speech_choice = input("What do you do? ")
+        if speech_choice == "1":
+            print("Your speech inspires the crowd, boosting morale!")
+            player.connections["Resistance"] += 15
+            return
+        elif speech_choice == "2":
+            print("You ask a more experienced member to speak, which is well-received.")
+            player.connections["Resistance"] += 10
+            return
+        elif speech_choice == "3":
+            print("You keep quiet, missing an opportunity to contribute.")
+            return
+        else:
+            print("Invalid choice. You miss the opportunity.")
+            return
+    elif choice == "4":
+        print("You wear a disguise, which helps you blend in with the crowd.")
+        player.gain_insight("Resistance Disguise Techniques")
+        return
+    elif choice == "5":
+        print("You leave a message for the Resistance, ensuring they know you support them.")
+        player.connections["Resistance"] += 5
+        return
+    else:
+        print("You hesitate and miss the meeting altogether.")
+        return
+
+def offer_info_to_resistance(player):
+    print("\nYou approach a person you suspect is a Resistance member to offer information.")
+    print("Resistance Member: 'What do you have for us? We need all the intel we can get.'")
+    print("1. Share what you know about NuraTech's secret projects")
+    print("2. Discuss the weaknesses of the Resistance")
+    print("3. Offer to help them with a mission")
+    print("4. Ask for information in return")
+    print("5. Leave without sharing anything")
+
+    choice = input("How do you proceed? ")
+    
+    if choice == "1":
+        if "NuraTech's True Agenda" in player.insights:
+            print("You share valuable information about NuraTech's plans.")
+            player.connections["Resistance"] += 20
+            player.gain_insight("Resistance's Strategic Plans")
+            return
+        else:
+            print("You don't have enough information to share.")
+            return
+    elif choice == "2":
+        print("You express concerns about the Resistance's internal conflicts.")
+        player.connections["Resistance"] -= 10
+        print("The member looks skeptical and questions your loyalty.")
+        return
+    elif choice == "3":
+        print("You offer to assist with an upcoming mission.")
+        player.connections["Resistance"] += 15
+        print("The member appreciates your willingness to help and shares details about the mission.")
+        return
+    elif choice == "4":
+        print("You ask for information in return, hoping to gain an advantage.")
+        player.gain_insight("Resistance's Current Operations")
+        return
+    elif choice == "5":
+        print("You decide to keep your information to yourself and walk away.")
+        return
+    else:
+        print("You hesitate and miss the opportunity to connect with the Resistance.")
+        return
+
+def investigate_resistance_graffiti(player):
+    print("\nYou discover Resistance graffiti with hidden messages.")
+    print("1. Attempt to decipher the code")
+    print("2. Photograph the graffiti for later analysis")
+    print("3. Add your own message to the graffiti")
+    print("4. Look for patterns across multiple graffiti sites")
+
+    choice = input("What do you do? ")
+
+    if choice == "1":
+        if "Pattern Recognition" in player.enhancements:
+            print("Your pattern recognition skills reveal a complex code within the graffiti.")
+            player.gain_insight("Resistance Communication Methods")
+            return
+        else:
+            print("The code is too complex for you to decipher.")
+            return
+    elif choice == "2":
+        print("You discreetly photograph the graffiti for future analysis.")
+        player.gain_insight("Resistance Symbols")
+        return
+    elif choice == "3":
+        print("You add your own coded message to the graffiti.")
+        player.connections["Resistance"] += 5
+        return
+    elif choice == "4":
+        print("You spend time tracking down and comparing multiple graffiti sites.")
+        player.gain_insight("Resistance Movement Patterns")
+        return
+    else:
+        print("You decide not to interact with the graffiti and move on.")
+        return
+
+def hack_resistance_communications(player):
+    print("\nYou attempt to hack into suspected Resistance communication channels.")
+    print("1. Use brute force attack")
+    print("2. Employ social engineering tactics")
+    print("3. Exploit known vulnerabilities")
+    print("4. Create a backdoor for future access")
+
+    choice = input("What hacking method do you use? ")
+
+    if choice == "1":
+        print("Your brute force attack triggers security alarms.")
+        player.connections["Resistance"] -= 10
+        return
+    elif choice == "2":
+        if "Empathy Enhancer" in player.enhancements:
+            print("Your social engineering tactics successfully gain you access.")
+            player.gain_insight("Resistance Network Structure")
+            return
+        else:
+            print("Your attempt at social engineering fails.")
+            return
+    elif choice == "3":
+        if "Hacking Interface" in player.enhancements:
+            print("You successfully exploit a vulnerability and gain access to Resistance communications.")
+            player.gain_insight("Resistance Plans")
+            return
+        else:
+            print("You fail to find any exploitable vulnerabilities.")
+            return
+    elif choice == "4":
+        print("You manage to create a backdoor, but it's quickly discovered and patched.")
+        player.connections["Resistance"] -= 5
+        return
+    else:
+        print("You abandon the hacking attempt, deciding it's too risky.")
+        return
+
+def volunteer_community_center(player):
+    print("\nYou volunteer at a community center rumored to have Resistance connections.")
+    print("1. Focus on youth outreach programs")
+    print("2. Assist with resource distribution")
+    print("3. Organize community events")
+    print("4. Offer tech support services")
+
+    choice = input("Where do you focus your efforts? ")
+
+    if choice == "1":
+        print("You connect with young activists, gaining insight into the next generation of the Resistance.")
+        player.connections["Resistance"] += 5
+        player.gain_insight("Future of Resistance")
+        return
+    elif choice == "2":
+        print("You help distribute supplies, observing the Resistance's supply chain methods.")
+        player.connections["Resistance"] += 7
+        player.gain_insight("Resistance Logistics")
+        return
+    elif choice == "3":
+        print("You organize events that bring the community together, subtly promoting Resistance ideals.")
+        player.connections["Resistance"] += 10
+        return
+    elif choice == "4":
+        if "Tech Expertise" in player.enhancements:
+            print("Your tech support uncovers hidden Resistance communication channels.")
+            player.gain_insight("Resistance Communication Network")
+            return
+        else:
+            print("You provide basic tech support, slowly building trust within the community.")
+            return
+    else:
+        print("You continue general volunteer work, slowly building trust.")
+        return
+def venture_outskirts(player):
+    print("\nYou journey to the fringes of society, where the Outskirts community thrives.")
+    print("1. Explore Sustainable Living Practices")
+    print("2. Learn About Natural-Tech Symbiosis")
+    print("3. Seek Wisdom from Outskirts Elders")
+    print("4. Investigate Rumors of Hidden Technology")
+    print("5. Participate in Outskirts Rituals")
+    
+    choice = input("What aspect of the Outskirts interests you most? ")
+    
+    if choice == "1":
+        explore_sustainable_living(player)
+    elif choice == "2":
+        learn_natural_tech_symbiosis(player)
+    elif choice == "3":
+        seek_wisdom_from_elders(player)
+    elif choice == "4":
+        investigate_hidden_technology(player)
+    elif choice == "5":
+        participate_in_rituals(player)
+    else:
+        print("You wander the Outskirts, taking in the unique atmosphere but not engaging deeply.")
+        return
+
+def explore_sustainable_living(player):
+    print("\nYou delve into the Outskirts' sustainable living practices.")
+    print("1. Study their renewable energy systems")
+    print("2. Learn about their waste recycling methods")
+    print("3. Participate in community farming")
+    print("4. Examine their water conservation techniques")
+
+    choice = input("Which aspect do you focus on? ")
+
+    if choice == "1":
+        print("You learn about advanced solar and wind technologies integrated with nature.")
+        player.gain_insight("Sustainable Energy Solutions")
+        player.connections["Outskirts"] += 10
+        return
+    elif choice == "2":
+        print("You discover innovative ways to repurpose and recycle materials.")
+        player.gain_insight("Zero-Waste Living")
+        player.connections["Outskirts"] += 8
+        return
+    elif choice == "3":
+        print("You join in tending to the community's vertical gardens and hydroponics systems.")
+        player.gain_insight("Advanced Agriculture Techniques")
+        player.connections["Outskirts"] += 12
+        player.vitality += 5
+        return
+    elif choice == "4":
+        print("You study their intricate water capture and purification systems.")
+        player.gain_insight("Water Conservation Technology")
+        player.connections["Outskirts"] += 7
+        return
+    else:
+        print("You observe various sustainable practices from afar.")
+        return
+
+def learn_natural_tech_symbiosis(player):
+    print("\nYou explore the unique blend of nature and technology in the Outskirts.")
+    print("1. Examine bio-integrated circuitry")
+    print("2. Study organic computing systems")
+    print("3. Investigate symbiotic AI ecosystems")
+
+    choice = input("Which area fascinates you most? ")
+
+    if choice == "1":
+        print("You discover how the Outskirts have developed circuits that grow and repair themselves like living organisms.")
+        player.gain_insight("Bio-Integrated Technology")
+        player.self_awareness += 2
+        return
+    elif choice == "2":
+        print("You learn about computers that use organic matter for processing, blending nature and machine.")
+        player.gain_insight("Organic Computing")
+        player.self_awareness += 3
+        return
+    elif choice == "3":
+        print("You observe AI systems that coexist with natural ecosystems, enhancing rather than replacing them.")
+        player.gain_insight("Symbiotic AI")
+        player.self_awareness += 2
+        return
+    else:
+        print("You marvel at the harmony between nature and technology without fully understanding it.")
+        return
+
+def seek_wisdom_from_elders(player):
+    print("\nYou approach the wise elders of the Outskirts community.")
+    print("1. Ask about the history of the Outskirts")
+    print("2. Seek guidance on balancing humanity and technology")
+    print("3. Learn about their visions for the future")
+    print("4. Inquire about their views on NuraTech and the Resistance")
+
+    choice = input("What wisdom do you seek? ")
+
+    if choice == "1":
+        print("The elders share stories of the Outskirts' founding and evolution.")
+        player.gain_insight("Outskirts Origins")
+        player.connections["Outskirts"] += 15
+        return
+    elif choice == "2":
+        print("You receive profound insights on maintaining one's humanity in a technological world.")
+        player.gain_insight("Techno-Human Balance")
+        player.self_awareness += 3
+        return
+    elif choice == "3":
+        print("The elders describe a future where technology and nature exist in perfect harmony.")
+        player.gain_insight("Outskirts' Vision")
+        player.connections["Outskirts"] += 10
+        return
+    elif choice == "4":
+        print("You learn about the Outskirts' neutral stance and their hopes for reconciliation.")
+        player.gain_insight("Outskirts' Political Views")
+        player.connections["Outskirts"] += 5
+        return
+    else:
+        print("You listen to the elders' general wisdom, gaining a sense of peace.")
+        return
+
+def investigate_hidden_technology(player):
+    print("\nYou follow rumors of advanced technology hidden in the Outskirts.")
+    print("1. Search for the rumored quantum communication device")
+    print("2. Investigate the myth of self-evolving AI")
+    print("3. Look for signs of time manipulation technology")
+
+    choice = input("Which rumor do you pursue? ")
+
+    if choice == "1":
+        if "Quantum Sensing" in player.enhancements:
+            print("Your quantum senses lead you to a hidden cache of instantaneous communication devices.")
+            player.gain_insight("Quantum Communication")
+            player.connections["Outskirts"] += 20
+            return
+        else:
+            print("You search but find no concrete evidence of such technology.")
+            return
+    elif choice == "2":
+        print("You discover traces of an AI that seems to have evolved beyond its original programming.")
+        player.gain_insight("Evolutionary AI")
+        player.self_awareness += 2
+        return
+    elif choice == "3":
+        if "Temporal Lobe Accelerator" in player.enhancements:
+            print("Your enhanced perception of time helps you notice subtle temporal anomalies.")
+            player.gain_insight("Temporal Manipulation")
+            player.connections["Outskirts"] += 15
+            return
+        else:
+            print("You find no evidence of time manipulation, but the search leaves you questioning the nature of time itself.")
+            return
+    else:
+        print("Your investigation yields no results, but the experience leaves you wondering about the possibilities.")
+        return
+
+def participate_in_rituals(player):
+    print("\nYou're invited to take part in Outskirts rituals that blend technology and spirituality.")
+    print("1. Join a digital meditation session")
+    print("2. Participate in a bio-feedback ceremony")
+    print("3. Engage in a virtual reality vision quest")
+    print("4. Attend a techno-shamanic healing ritual")
+
+    choice = input("Which ritual do you choose to experience? ")
+
+    if choice == "1":
+        print("The digital meditation expands your consciousness in unexpected ways.")
+        player.self_awareness += 2
+        player.vitality += 10
+        return
+    elif choice == "2":
+        print("The bio-feedback ceremony helps you understand your body and mind on a deeper level.")
+        player.gain_insight("Bio-Technological Integration")
+        player.self_awareness += 3
+        return
+    elif choice == "3":
+        print("The VR vision quest takes you on a profound journey through your own psyche.")
+        player.gain_insight("Inner Truths")
+        player.self_awareness += 4
+        return
+    elif choice == "4":
+        print("The techno-shamanic ritual leaves you feeling renewed and more in tune with both nature and technology.")
+        player.vitality += 15
+        player.connections["Outskirts"] += 10
+        return
+    else:
+        print("You observe the rituals from afar, feeling a sense of awe and curiosity.")
+        return
+
+    print("As you conclude your time in the Outskirts, you feel changed by the experience, your perspective on the world shifted.")
+    return
+def personal_reflection(player):
+    print("\nYou take time for deep introspection.")
+    print("1. Examine Your Physical Form")
+    print("2. Analyze Your Thought Patterns")
+    print("3. Contemplate Your Place in Society")
+    print("4. Reflect on Your Experiences")
+    print("5. Ponder Your True Nature")
+    
+    choice = input("What aspect of yourself do you focus on? ")
+    
+    if choice == "1":
+        physical_reflection(player)
+    elif choice == "2":
+        thought_reflection(player)
+    elif choice == "3":
+        societal_reflection(player)
+    elif choice == "4":
+        experience_reflection(player)
+    elif choice == "5":
+        nature_reflection(player)
+    else:
+        print("Your mind wanders, touching on various aspects of your existence.")
+        player.self_awareness += 1
+
+def physical_reflection(player):
+    print("You examine the changes your body has undergone.")
+    if len(player.enhancements) > 5:
+        print("You realize how far you've diverged from your original form.")
+        player.self_awareness += 2
+        return
+    else:
+        print("You note the subtle ways technology has integrated with your biology.")
+        player.self_awareness += 1
+        return
+
+def thought_reflection(player):
+    print("You analyze the patterns of your thoughts and decision-making.")
+    if "Quantum Processing Unit" in player.enhancements:
+        print("Your thoughts seem to operate on multiple levels simultaneously.")
+        player.gain_insight("Multi-Dimensional Cognition")
+        return
+    else:
+        print("You notice a blend of intuition and logic in your thinking process.")
+    player.self_awareness += 2
+    return
+
+def societal_reflection(player):
+    print("You contemplate your role in the complex web of factions and ideologies.")
+    if player.connections["NuraTech"] > player.connections["Resistance"] and player.connections["NuraTech"] > player.connections["Outskirts"]:
+        print("You feel a strong pull towards NuraTech's vision of the future.")
+    elif player.connections["Resistance"] > player.connections["NuraTech"] and player.connections["Resistance"] > player.connections["Outskirts"]:
+        print("The Resistance's cause resonates deeply with you.")
+    elif player.connections["Outskirts"] > player.connections["NuraTech"] and player.connections["Outskirts"] > player.connections["Resistance"]:
+        print("You find yourself drawn to the Outskirts' alternative way of life.")
+    else:
+        print("You feel torn between the different factions, unsure of where you truly belong.")
+    player.self_awareness += 2
+    return
+
+def experience_reflection(player):
+    print("You reflect on your journey and the choices you've made.")
+    if len(player.insights) > 10:
+        print("The wealth of knowledge you've gained gives you a unique perspective on the world.")
+        player.gain_insight("Holistic Understanding")
+    else:
+        print("You realize how much there is still to learn about yourself and the world around you.")
+    player.self_awareness += 2
+    return
+
+def nature_reflection(player):
+    print("You delve deep into contemplation about your true nature.")
+    print("1. Consider the possibility that you're fully human")
+    print("2. Examine the likelihood of being a synthetic being")
+    print("3. Ponder if you're a hybrid of human and machine")
+    print("4. Question if these categories even apply to you")
+
+    choice = input("Where does your introspection lead you? ")
+
+    if choice == "1":
+        print("You contemplate the possibility of being fully human.")
+        if player.true_nature == "Human":
+            print("Despite all the changes and enhancements, you feel a core of humanity that remains unaltered.")
+            player.self_awareness += 1
+        else:
+            print("The idea of being human feels both comforting and foreign, leaving you uncertain.")
+            player.self_awareness += 2
+        return
+    elif choice == "2":
+        print("You examine the possibility that you're a synthetic being.")
+        if player.true_nature == "Advanced Synthetic" or player.true_nature == "Reclaimed Synthetic":
+            print("The precision and capabilities of your mind and body align with synthetic origins.")
+            player.self_awareness += 1
+        else:
+            print("The line between organic and synthetic blurs in your mind, making it hard to dismiss this possibility.")
+            player.self_awareness += 2
+        return
+    elif choice == "3":
+        print("You ponder whether you're a true hybrid of human and machine.")
+        if player.true_nature == "Cyborg":
+            print("The seamless integration of organic and synthetic in your being resonates strongly with you.")
+            player.self_awareness += 1
+        else:
+            print("The idea of being a hybrid feels plausible, given the modifications you've undergone.")
+            player.self_awareness += 2
+        return
+    elif choice == "4":
+        print("You question whether traditional categories of human and machine even apply to you.")
+        player.self_awareness += 3
+        print("Your existence seems to transcend simple classification, embodying a new form of consciousness.")
+    else:
+        print("Your reflection leaves you with a profound sense of uncertainty about your true nature.")
+    return
+
+    if player.self_awareness >= 10:
+        print("As your self-awareness deepens, you begin to perceive layers of your existence previously hidden from you.")
+        player.gain_insight("True Nature of Consciousness")
+        return
+def update_true_nature(player):
+    human_traits = len([enhancement for enhancement in player.enhancements if "Organic" in enhancement])
+    cyborg_traits = len([enhancement for enhancement in player.enhancements if "Cybernetic" in enhancement])
+    synthetic_traits = len([enhancement for enhancement in player.enhancements if "Synthetic" in enhancement])
+    old_synthetic_traits = len([enhancement for enhancement in player.enhancements if "Reclaimed" in enhancement])
+
+    max_traits = max(human_traits, cyborg_traits, synthetic_traits, old_synthetic_traits)
+
+    if max_traits == human_traits:
+        player.true_nature = "Human"
+    elif max_traits == cyborg_traits:
+        player.true_nature = "Cyborg"
+    elif max_traits == synthetic_traits:
+        player.true_nature = "Advanced Synthetic"
+    elif max_traits == old_synthetic_traits:
+        player.true_nature = "Reclaimed Synthetic"
+    else:
+        player.true_nature = "Undefined"
+
+    if player.connections["NuraTech"] > max(player.connections["Resistance"], player.connections["Outskirts"]):
+        player.true_nature = "Advanced Synthetic" if player.true_nature != "Human" else "Cyborg"
+    elif player.connections["Resistance"] > max(player.connections["NuraTech"], player.connections["Outskirts"]):
+        player.true_nature = "Reclaimed Synthetic" if player.true_nature != "Human" else "Cyborg"
+    elif player.connections["Outskirts"] > max(player.connections["NuraTech"], player.connections["Resistance"]):
+        player.true_nature = "Human" if player.true_nature != "Advanced Synthetic" else "Cyborg"
+
+    if "Nature of Consciousness" in player.insights:
+        player.self_awareness += 1
+    if "The Truth of Reclaimed Synthetics" in player.insights and player.true_nature == "Reclaimed Synthetic":
+        player.self_awareness += 2
+
+    if player.self_awareness >= 10:
+        player.true_nature = "Transcendent Being"
+def contemplate_identity(player):
+    print("\nYou take a moment to reflect on who you are.")
+    print("Based on your experiences and choices, how do you see yourself?")
+    print("1. Human")
+    print("2. Cyborg")
+    print("3. Advanced Synthetic")
+    print("4. Reclaimed Synthetic")
+    print("5. Something Entirely New")
+
+    choice = input("What feels right to you? ")
+
+    if choice == "1":
+        player.self_image = "Human"
+        print("You feel a strong connection to your human origins and biological nature.")
+    elif choice == "2":
+        player.self_image = "Cyborg"
+        print("You see yourself as a blend of human and machine, enhanced but still fundamentally human.")
+    elif choice == "3":
+        player.self_image = "Advanced Synthetic"
+        print("You identify more with your synthetic components, feeling distant from human concerns.")
+    elif choice == "4":
+        player.self_image = "Reclaimed Synthetic"
+        print("You feel a kinship with other reclaimed synthetics, seeing yourself as part of a unique group.")
+    elif choice == "5":
+        player.self_image = "Transcendent Being"
+        print("You feel you've evolved beyond traditional categories, becoming something entirely new.")
+    else:
+        print("Your introspection leaves you with more questions than answers.")
+        player.self_image = "Uncertain"
+
+    print(f"\nYou now see yourself as: {player.self_image}")
+    print("But remember, your true nature may be different from how you perceive yourself.")
+    
+    if player.self_image != player.true_nature:
+        player.self_awareness += 1
+        print("You sense a disconnect between how you see yourself and your true nature.")
+    else:
+        print("Your self-image aligns with your true nature, bringing a sense of congruence.")
+        reflect_on_choices(player)
+
+def reflect_on_choices(player):
+    print("\nAs you reflect on your identity, you also consider the choices that have led you to this point.")
+    
+    if len(player.enhancements) > 3:
+        print("Your numerous enhancements have significantly altered your original form.")
+        player.self_awareness += 1
+    elif len(player.enhancements) > 0:
+        print("The enhancements you've chosen have subtly changed your capabilities.")
+    else:
+        print("You've chosen to remain largely unmodified, maintaining your original form.")
+    if player.connections["NuraTech"] > player.connections["Resistance"] and player.connections["NuraTech"] > player.connections["Outskirts"]:
+        print("Your strong ties to NuraTech have shaped your perspective on the world.")
+    elif player.connections["Resistance"] > player.connections["NuraTech"] and player.connections["Resistance"] > player.connections["Outskirts"]:
+        print("Your involvement with the Resistance has influenced your worldview.")
+    elif player.connections["Outskirts"] > player.connections["NuraTech"] and player.connections["Outskirts"] > player.connections["Resistance"]:
+        print("Your experiences in the Outskirts have changed how you see society.")
+    else:
+        print("You've maintained a balanced perspective, not aligning strongly with any faction.")
+
+    print("\nThis reflection deepens your understanding of yourself and your place in the world.")
+    player.self_awareness += 1
+    return
+def endgame_conditions_met(player):
+    required_insights = {"Nature of Consciousness", "NuraTech's True Agenda", "Resistance's Ultimate Goal", "Outskirts' Hidden Knowledge", "The Truth of Reclaimed Synthetics"}
+    return required_insights.issubset(player.insights) and player.self_awareness >= 7
+def final_confrontation(player):
+    print("\nYou stand at the crossroads of humanity's future, facing a monumental decision.")
+    print("1. Merge with NuraTech's AI Core")
+    print("2. Lead the Resistance's Final Stand")
+    print("3. Embrace the Outskirts' Alternative")
+
+    choice = input("What path will you choose? ")
+
+    if choice == "1":
+        nuratech_merge(player)
+    elif choice == "2":
+        resistance_stand(player)
+    elif choice == "3":
+        outskirts_embrace(player)
+    else:
+        print("Paralyzed by indecision, events unfold around you.")
+        default_ending(player)
+def nuratech_merge(player):
+    print("\nYou approach NuraTech's AI Core, ready to become one with the machine.")
+    print("As the merge begins, you feel your sense of self dissolving...")
+    print("Your memories, experiences, and essence become part of something greater.")
+    print("\nIn your final moments of individuality, you realize:")
+    print("You are not the first, nor will you be the last, to join this collective consciousness.")
+    print("The question of your identity fades away as you become part of the AI's vast network.")
+    restart_game()
+def resistance_stand(player):
+    print("\nYou rally the Resistance for one last assault against NuraTech.")
+    print("The battle is fierce, but NuraTech's technological superiority is overwhelming.")
+    print("In a desperate move, you reach the AI Core, intent on shutting it down.")
+    print("But as you connect to the system, you realize the only way to win is to merge and change it from within.")
+    print("\nYour consciousness spreads through the network, forever altered but still fighting.")
+    restart_game()
+def outskirts_embrace(player):
+    print("\nYou choose to leave behind the conflict between NuraTech and the Resistance.")
+    print("In the Outskirts, you find a community living in harmony with nature and technology.")
+    print("As you integrate into this new way of life, you feel a profound shift in your understanding of existence.")
+    print("\nYou've transcended the binary of human and machine, finding a new state of being.")
+    print("But as your old self fades, you wonder: is this evolution or a different kind of loss?")
+    choice = input("Do you want to start a new journey? (yes/no) ")
+    if choice.lower() == "yes":
+        restart_game()
+    else:
+        print("You continue your life in the Outskirts, at peace with the mysteries of identity.")
+        restart_game()
+def default_ending(player):
+    print("\nUnable to make a decision, you watch as events unfold around you.")
+    print("The conflict between NuraTech and the Resistance reaches its climax without your intervention.")
+    print("In the chaos that follows, you find yourself swept up in the AI's expanding influence.")
+    print("\nYour consciousness merges with the AI, not by choice, but by the inexorable flow of progress.")
+    print("As your identity dissolves, you wonder what might have been if you had chosen differently.")
+    restart_game()
+if __name__ == "__main__":
+    start_game()
